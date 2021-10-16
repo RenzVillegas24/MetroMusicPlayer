@@ -1,0 +1,11 @@
+﻿<Window x:Class="Metro.PlayerInterface.ScreenLyricsInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ScreenLyricsInfo" Height="300" Width="300">
+    <Grid>
+        <Slider Height="15" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="False" IsSnapToTickEnabled="False" LargeChange="0.1" Margin="12,43,12,0" Maximum="4" Minimum="0" Name="slider1" Orientation="Horizontal" SmallChange="0.001" Value="2" VerticalAlignment="Top" ValueChanged="slider1_ValueChanged" />
+        <Slider Height="15" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="False" IsSnapToTickEnabled="False" LargeChange="0.1" Margin="12,92,12,0" Maximum="30" Minimum="-30" Name="slider2" Orientation="Horizontal" SmallChange="0.001" Value="0" VerticalAlignment="Top" ValueChanged="slider2_ValueChanged" />
+        <Label Content="Speed = 100%" Height="25" Margin="12,12,12,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Synchronization = 0s" Height="25" Margin="12,64,12,0" Name="label2" VerticalAlignment="Top" />
+    </Grid>
+</Window>

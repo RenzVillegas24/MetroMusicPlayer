@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:l="clr-namespace:Metro.Custom">
+    <Style TargetType="{x:Type l:ButtonRipple}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type l:ButtonRipple}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                    <Grid x:Name="PART_grid" ClipToBounds="True" >
+                        <Grid.Resources>
+                            <Storyboard AccelerationRatio="0.2" DecelerationRatio="0.8" x:Key="PART_animationKey" Storyboard.TargetName="PART_ellipse">
+                                <DoubleAnimation Storyboard.TargetProperty="Width" From="0" Duration="0:0:0.25" />
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0,0,0,0" Duration="0:0:0.25" />
+                                <DoubleAnimation BeginTime="0:0:0" Duration="0:0:0" Storyboard.TargetProperty="Opacity" To="1" />
+                            </Storyboard>
+                            <Storyboard AccelerationRatio="0.2" DecelerationRatio="0.8" x:Key="PART_animation" Storyboard.TargetName="PART_ellipse">
+                                <DoubleAnimation Storyboard.TargetProperty="Width" From="0" Duration="0:0:0.25" />
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0,0,0,0" Duration="0:0:0.25" />
+                                <DoubleAnimation BeginTime="0:0:0" Duration="0:0:0" Storyboard.TargetProperty="Opacity" To="1" />
+                            </Storyboard>
+                            <Storyboard x:Key="PART_animation2" AccelerationRatio="0.2" DecelerationRatio="0.8" Storyboard.TargetName="PART_ellipse">
+                                <DoubleAnimation BeginTime="0:0:0.15" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity" To="0" />
+                            </Storyboard>
+                            <Storyboard x:Key="PART_enter" Storyboard.TargetName="Back">
+                                <DoubleAnimation To="0.3" Storyboard.TargetProperty="Opacity" Duration="0:0:0.15" />
+                            </Storyboard>
+                            <Storyboard x:Key="PART_leave"  Storyboard.TargetName="Back">
+                                <DoubleAnimation To="0"  Storyboard.TargetProperty="Opacity" Duration="0:0:0.5" />
+                            </Storyboard>
+                        </Grid.Resources>
+                        
+                        <Border x:Name="Back" Background="{Binding Path=HighlightBackground, RelativeSource={RelativeSource TemplatedParent}}" Opacity="0" />
+
+                        <Ellipse x:Name="PART_ellipse"
+                            Fill="{Binding Path=HighlightBackground, RelativeSource={RelativeSource TemplatedParent}}" 
+                            Width="0" Height="{Binding Path=Width, RelativeSource={RelativeSource Self}}" 
+                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        
+                        <ContentPresenter x:Name="PART_contentpresenter" Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True" />
+                        
+                    </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,8 @@
+﻿<Window x:Class="Metro.OnlineMusic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OnlineMusic" Height="300" Width="483">
+    <Grid>
+        
+    </Grid>
+</Window>

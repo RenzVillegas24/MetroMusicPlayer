@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Metro.Custom.AnimatedCaret"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" ClipToBounds="True"
+             d:DesignHeight="82" d:DesignWidth="300">
+    <Grid>
+        <TextBox x:Name="CustomTextBox" 
+                FontFamily="Gesta" 
+                FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=FontSize}"  SelectionChanged="CustomTextBox_SelectionChanged"
+                AcceptsReturn="True"  TextChanged="CustomTextBox_TextChanged"
+                TextWrapping="Wrap" Padding="0"
+                Margin="0" IsEnabled="True" AutoWordSelection="False" BorderThickness="0" Background="WhiteSmoke" CaretBrush="Transparent"></TextBox>
+        <Border x:Name="Caret" 
+                Width="1" 
+                Height="30"  HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="-5,2,0,0"
+                Background="Black" >
+            <Border.Resources>
+                <Storyboard x:Key="Anims">
+                    <ThicknessAnimationUsingKeyFrames>
+                        <SplineThicknessKeyFrame KeyTime="0:0:0.15" KeySpline="0.2,0.5,0,1" />
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames>
+                        <SplineDoubleKeyFrame KeyTime="0:0:0.15" KeySpline="0.2,0.5,0,1" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </Border.Resources>
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="Window.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard  x:Name="CaretStoryBoard" 
+                                         RepeatBehavior="Forever">
+                            <DoubleAnimation
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0" AutoReverse="True" From="1"
+                                        Duration="0:0:0:0.5" BeginTime="0:0:0.5"
+                                        FillBehavior="HoldEnd">
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+        </Border>
+        <Border x:Name="Selection" 
+                Width="0" 
+                Height="30"  HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="0,2,0,0"
+                Background="Red"  />
+    </Grid>
+</UserControl>

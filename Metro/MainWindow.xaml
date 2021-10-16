@@ -1,0 +1,260 @@
+﻿<Window x:Class="Metro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:my="clr-namespace:Metro.Custom"
+        Style="{StaticResource ResourceKey=MyWindowStyle}" xmlns:AniScroll="clr-namespace:AnimatedScrollViewer"
+        Title="Real Jam Music Player" Height="450" Width="640" IsEnabled="True" MinHeight="450" MinWidth="640" VerticalAlignment="Bottom"
+         xmlns:local="clr-namespace:BandedSpectrumAnalyzer"
+         xmlns:my1="clr-namespace:Metro.MenuItems"
+    xmlns:Shell="clr-namespace:Microsoft.Windows.Shell;assembly=Microsoft.Windows.Shell"
+         xmlns:Interface="clr-namespace:Metro.PlayerInterface" SizeChanged="Window_SizeChanged" 
+        Closed="Window_Closed" Loaded="Window_Loaded"
+        KeyDown="Window_KeyDown" IsVisibleChanged="Window_IsVisibleChanged">
+   
+
+   <Shell:TaskbarItemInfo.TaskbarItemInfo>
+        <Shell:TaskbarItemInfo Description="Real Jam Music Player">
+            <Shell:TaskbarItemInfo.ThumbButtonInfos>
+                <Shell:ThumbButtonInfo Visibility="Visible" Click="TaskbarPrev_Click"  x:Name="TaskbarPrev" Description="Previus">
+                    <Shell:ThumbButtonInfo.ImageSource>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing Brush="White" Geometry="M7,18 L21,10 21,10 21, 26 7,18 M1,10 L5,10 5,26 1,26"/>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Shell:ThumbButtonInfo.ImageSource>
+                </Shell:ThumbButtonInfo>
+                <Shell:ThumbButtonInfo Visibility="Visible" Click="TaskbarPlayPause_Click"  x:Name="TaskbarPlayPause" Description="Play">
+                    <Shell:ThumbButtonInfo.ImageSource>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing Brush="White" x:Name="TskPlPImage" Geometry="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26"/>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Shell:ThumbButtonInfo.ImageSource>
+                </Shell:ThumbButtonInfo>
+                <Shell:ThumbButtonInfo Visibility="Visible" Click="TaskbarNext_Click" x:Name="TaskbarNext" Description="Next">
+                    <Shell:ThumbButtonInfo.ImageSource>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing Brush="White" Geometry="M11,10L18,13.74  26,18 18,22.28 11,26 M28,10 L32,10 32,26 28,26"/>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Shell:ThumbButtonInfo.ImageSource>
+                </Shell:ThumbButtonInfo>
+            </Shell:TaskbarItemInfo.ThumbButtonInfos>
+        </Shell:TaskbarItemInfo>
+    </Shell:TaskbarItemInfo.TaskbarItemInfo>
+
+    <Grid UseLayoutRounding="True">
+        <Grid x:Name="MainGrid">
+            <Grid.Resources>
+                <Storyboard x:Key="In">
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="0:0:0"  Value="-1,350,-1,-175"/>
+                        <SplineThicknessKeyFrame KeyTime="0:0:0.75"  Value="-1,0,-1,0" KeySpline="0.2,0.5,0,1"/>
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.1" Duration="0:0:0.1" From="0"  To="1" />
+                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Visible</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="Out">
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="0"  Value="-1,30,-1,0"/>
+                        <SplineThicknessKeyFrame KeyTime="0:0:0.75" Value="-1,-100,-1,300" KeySpline="0.2,0.5,0,1"/>
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity"  BeginTime="0:0:0.1" Duration="0:0:0.1" From="1"  To="0" />
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0.25"  Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0.25">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Collapsed</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="In2">
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="0:0:0"  Value="-1,-300,-1,100"/>
+                        <SplineThicknessKeyFrame KeyTime="0:0:0.75"  Value="-1,30,-1,0" KeySpline="0.2,0.5,0,1"/>
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.1" Duration="0:0:0.1" From="0"  To="1" />
+                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Visible</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="Out2">
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="0"  Value="-1,0,-1,0"/>
+                        <SplineThicknessKeyFrame KeyTime="0:0:0.75" Value="-1,350,-1,-175" KeySpline="0.2,0.5,0,1"/>
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity"  BeginTime="0:0:0.1" Duration="0:0:0.1" From="1"  To="0" />
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0.25"  Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0.25">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Collapsed</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </Grid.Resources>
+            <Interface:Screen Margin="-1,30,-1,0" x:Name="screenUI"/>
+            <Grid  Background="#FF212121"  Height="55" HorizontalAlignment="Stretch" Margin="-1,-25,-1,0" VerticalAlignment="Top"/>
+            <Interface:Playlist Margin="-1,0,-1,0" x:Name="playlistUI" Tag="Closed" Visibility="Hidden" />
+            <StackPanel HorizontalAlignment="Stretch" Name="stackPanel1" VerticalAlignment="Top" Orientation="Horizontal" MouseDown="stackPanel1_MouseDown" Margin="0" Height="30">
+                <my:ButtonRipple Content="Menu" Height="30" x:Name="menuButton" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Foreground="White" HighlightBackground="#FFB7B7B7" Click="OpenMenu_Click" />
+                <my:ButtonRipple Content="Online Music" Foreground="White" Height="30" HighlightBackground="#FFB7B7B7" HorizontalContentAlignment="Center" x:Name="onlinemusicButton" VerticalContentAlignment="Center" Width="80" Click="onlinemusicButton_Click" />
+                <my:ButtonRipple Content="Mini Player" Foreground="White" Height="30" HighlightBackground="#FFB7B7B7" HorizontalContentAlignment="Center" x:Name="minPlayerButton" VerticalContentAlignment="Center" Width="80" Click="minPlayerButton_Click" />
+            </StackPanel>
+        </Grid>
+        <Grid HorizontalAlignment="Stretch" Margin="0,-25,0,0" Name="menuContent" VerticalAlignment="Stretch" Background="#808080" Opacity="0" Visibility="Hidden">
+                <my1:Open HorizontalAlignment="Stretch" Margin="0,25,170,0" Opacity="0" Visibility="Hidden"  x:Name="menuOpenContent" VerticalAlignment="Stretch" />
+                <my1:Equalizer HorizontalAlignment="Stretch" Margin="0,25,170,0" Opacity="0" Visibility="Hidden"  x:Name="menuEqualizerContent" VerticalAlignment="Stretch" />
+                <my1:About HorizontalAlignment="Stretch" Margin="0,25,170,0" Opacity="0" Visibility="Hidden"  x:Name="menuAboutContent" VerticalAlignment="Stretch" />
+                <my1:Settings HorizontalAlignment="Stretch" Margin="0,25,170,0" Opacity="0" Visibility="Hidden"  x:Name="menuSettingsContent" VerticalAlignment="Stretch" />
+        </Grid>
+        <Grid Name="Menu" HorizontalAlignment="Left" Width="170" Margin="-172,-25,0,0">
+            <Grid.Resources>
+                <Storyboard x:Key="Open">
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="Menu" Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="0:0:1" Value="0,-25,0,0" KeySpline="0,0.3,0,1"/>
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimation Storyboard.TargetName="menuContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.3" To="1" />
+                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetName="menuContent" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Visible</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:1" Storyboard.TargetName="MainGrid" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:1">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Collapsed</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="Close">
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="Menu" Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="0:0:.4" Value="-172,-25,0,0" KeySpline="0,0,0.95,0.37"/>
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimation Storyboard.TargetName="menuContent" Storyboard.TargetProperty="Opacity" Duration="0:0:0.2" To="0" />
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0.4" Storyboard.TargetName="menuContent" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0.4">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Collapsed</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="MainGrid" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Visible</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="menuButtons-Checked">
+                    <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"  Duration="0:0:0.2" To="#AF808080"/>
+                </Storyboard>
+                <Storyboard x:Key="menuButtons-Normal">
+                    <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Duration="0:0:0.3" To="#00000000"/>
+                </Storyboard>
+                <Storyboard x:Key="menuButtonsOpen-In">
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="0:0:.5" Value="170,25,0,0" KeySpline="0,0.3,0,1"/> 
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimation  Storyboard.TargetProperty="Opacity" Duration="0:0:0.3" To="1" />
+                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Visible</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="menuButtonsOpen-Out">
+                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="0:0:.4" Value="0,25,170,0" KeySpline="0,0,0.95,0.37"/>
+                    </ThicknessAnimationUsingKeyFrames>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0.2" To="0" />
+                    <ObjectAnimationUsingKeyFrames Duration="0:0:0.2" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0.2">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Hidden</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </Grid.Resources>
+
+            <my:CircleButtonRipple  UseLayoutRounding="True" BorderBrush="White" BorderThickness="1.75" Height="40" HorizontalAlignment="Left" Margin="20,20,0,0" x:Name="circlebuttonRipple1" VerticalAlignment="Top" Width="40" HighlightBackground="#FFB7B7B7" Click="CloseMenu_Click" >
+                     <Path Width="30" Height="40" StrokeThickness="5" x:Name="backStroke" Stroke="White" Data="M0,-10L-20,10L0,30 M-20,10L20,10" Margin="0,-5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransform=".5,0,0,.5,19,18" />
+            </my:CircleButtonRipple>
+            <Label Content="Menu" Height="40" VerticalAlignment="Top" Margin="70,20,11,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="White" FontSize="23" Padding="5,0,0,0" />
+           
+            <Grid>
+                <my:ButtonRipple Content="About" FontSize="13" Foreground="White" Height="40" HighlightBackground="#AF808080" HorizontalContentAlignment="Left" Margin="0,0,14,20" x:Name="menuAbout" Padding="20,0,0,0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" BorderThickness="0,1,0,0" BorderBrush="LightGray" IsCancel="False" ClickMode="Release" Click="menuAbout_Click" Grid.ColumnSpan="2">
+                    <my:ButtonRipple.Background>
+                        <SolidColorBrush />
+                    </my:ButtonRipple.Background>
+                </my:ButtonRipple>
+            <my:ButtonRipple Content="Open" Height="40" Margin="0,79,14,0" x:Name="menuOpen" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="White" FontSize="13" Padding="20,0,0,0" HighlightBackground="#AF808080" IsCancel="False" ClickMode="Release" Click="menuOpen_Click" Grid.ColumnSpan="2">
+                <my:ButtonRipple.Background>
+                    <SolidColorBrush />
+                </my:ButtonRipple.Background>
+            </my:ButtonRipple>
+            <my:ButtonRipple Content="Musics" FontSize="13" Foreground="White" Height="40" HorizontalContentAlignment="Left" Margin="0,119,14,0" x:Name="menuMusics" Padding="20,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HighlightBackground="#AF808080" IsCancel="False" ClickMode="Release" Click="menuMusics_Click" Grid.ColumnSpan="2">
+                <my:ButtonRipple.Background>
+                    <SolidColorBrush />
+                </my:ButtonRipple.Background>
+            </my:ButtonRipple>
+            <my:ButtonRipple Content="Playlists" FontSize="13" Foreground="White" Height="40" HorizontalContentAlignment="Left" Margin="0,159,14,0" x:Name="menuPlaylist" Padding="20,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HighlightBackground="#AF808080" IsCancel="False" ClickMode="Release" Click="menuPlaylist_Click" Grid.ColumnSpan="2">
+                <my:ButtonRipple.Background>
+                    <SolidColorBrush />
+                </my:ButtonRipple.Background>
+            </my:ButtonRipple>
+            <my:ButtonRipple Content="Favorites" FontSize="13" Foreground="White" Height="40" HorizontalContentAlignment="Left" Margin="0,199,14,0" x:Name="menuFavorites" Padding="20,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HighlightBackground="#AF808080" IsCancel="False" ClickMode="Release" Click="menuFavorites_Click" Grid.ColumnSpan="2">
+                <my:ButtonRipple.Background>
+                    <SolidColorBrush />
+                </my:ButtonRipple.Background>
+            </my:ButtonRipple>
+            <my:ButtonRipple Content="Customize" FontSize="13" Foreground="White" Height="40" HorizontalContentAlignment="Left" Margin="0,279,14,0" x:Name="menuCustomize" Padding="20,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HighlightBackground="#AF808080" IsCancel="False" ClickMode="Release" Click="menuCustomize_Click" Grid.ColumnSpan="2">
+                <my:ButtonRipple.Background>
+                    <SolidColorBrush />
+                </my:ButtonRipple.Background>
+            </my:ButtonRipple>
+            <my:ButtonRipple Content="Settings" FontSize="13" Foreground="White" Height="40" HorizontalContentAlignment="Left" Margin="0,319,14,0" x:Name="menuSettings" Padding="20,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" HighlightBackground="#AF808080" IsCancel="False" ClickMode="Release" Click="menuSettings_Click" Grid.ColumnSpan="2">
+                <my:ButtonRipple.Background>
+                    <SolidColorBrush />
+                </my:ButtonRipple.Background>
+            </my:ButtonRipple>
+            <my:ButtonRipple Content="Equalizer" FontSize="13" Foreground="White" Height="40" HighlightBackground="#AF808080" HorizontalContentAlignment="Left" Margin="0,239,14,0" x:Name="menuEqualizer" Padding="20,0,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" IsCancel="False" ClickMode="Release" Click="menuEqualizer_Click" Grid.ColumnSpan="2">
+                <my:ButtonRipple.Background>
+                    <SolidColorBrush />
+                </my:ButtonRipple.Background>
+            </my:ButtonRipple>
+            </Grid>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                    <GradientStop Color="DodgerBlue" Offset="0.918" />
+                    <GradientStop Color="#7D3B3B3B" Offset="0.918" />
+                    <GradientStop Color="#00000000" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid> 
+    <!--    <my:ButtonRipple Height="24" HorizontalAlignment="Left" Margin="1,-24,0,0" x:Name="buttonRipple1" VerticalAlignment="Top" Width="35" HighlightBackground="DodgerBlue" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <Path Width="16.5" Height="12.5" Stretch="Fill" Fill="White" Data="F1 M 57,42L 57,34L 32.25,34L 42.25,24L 31.75,24L 17.75,38L 31.75,52L 42.25,52L 32.25,42L 57,42 Z "/>
+        </my:ButtonRipple>
+        -->
+    </Grid>
+</Window>
+ 

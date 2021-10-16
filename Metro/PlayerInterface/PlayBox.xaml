@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="Metro.PlayerInterface.PlayBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"  Background="#FF212121"
+             d:DesignHeight="300" d:DesignWidth="300" Height="72" Width="200" xmlns:my="clr-namespace:Metro.Custom">
+    <Grid>
+        <Viewbox>
+            <Grid Height="75" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="200">
+                <my:CircleButtonRipple RenderTransformOrigin="0.5,0.5" Background="#00A9A9A9" BorderBrush="White" BorderThickness="2" Click="PlayPauseBtn_Click" Height="60" HighlightBackground="DarkGray" HorizontalAlignment="Center" HorizontalContentAlignment="Center" MouseEnter="PlayPauseBtn_MouseOver" MouseLeave="PlayPauseBtn_MouseLeave" x:Name="PlayPauseBtn" Tag="Paused" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="60">
+                <my:CircleButtonRipple.RenderTransform>
+                    <ScaleTransform />
+                </my:CircleButtonRipple.RenderTransform>
+                <my:CircleButtonRipple.Resources>
+                    <Storyboard x:Key="PlayAnim">
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PlayPauseIconA" Storyboard.TargetProperty="Angle">
+                                <SplineDoubleKeyFrame KeySpline="0.2,0.5,0,1" KeyTime="0:0:0.5" Value="360" />
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimation AutoReverse="True" Duration="0:0:0.15" From="1" Storyboard.TargetName="PlayPauseIcon" Storyboard.TargetProperty="Opacity" To="0" />
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlayPauseIcon" Storyboard.TargetProperty="(Path.Data)">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.15">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <PathGeometry Figures="M11,10L18,13.74 18,22.28 11,26 M18,13.74L26,18 26,18 18,22.28" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                    <Storyboard x:Key="PauseAnim">
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PlayPauseIconA" Storyboard.TargetProperty="Angle">
+                                <SplineDoubleKeyFrame KeySpline="0.2,0.5,0,1" KeyTime="0:0:0.5" Value="0" />
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimation AutoReverse="True" Duration="0:0:0.15" From="1" Storyboard.TargetName="PlayPauseIcon" Storyboard.TargetProperty="Opacity" To="0" />
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlayPauseIcon" Storyboard.TargetProperty="(Path.Data)">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.15">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <PathGeometry Figures="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                    <Storyboard x:Key="MouseOverLeave">
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleX">
+                            <SplineDoubleKeyFrame KeySpline="0,0,0.3,2" KeyTime="0:0:0.35" Value="1.2" />
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY">
+                            <SplineDoubleKeyFrame KeySpline="0,0,0.3,2" KeyTime="0:0:0.35" Value="1.2" />
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </my:CircleButtonRipple.Resources>
+                <Grid>
+                    <Path Fill="White"  RenderTransformOrigin="0.5,0.5" Height="26" HorizontalAlignment="Center" Margin="0" Name="PlayPauseIcon" Stretch="Uniform" VerticalAlignment="Center" Width="26">
+                        <Path.Data>
+                            <PathGeometry Figures="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
+                        </Path.Data>
+                        <Path.RenderTransform>
+                            <RotateTransform x:Name="PlayPauseIconA" />
+                        </Path.RenderTransform>
+                    </Path>
+                </Grid>
+            </my:CircleButtonRipple>
+            <my:CircleButtonRipple  RenderTransformOrigin="0.5,0.5" BorderThickness="1" Height="45" HighlightBackground="DarkGray" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="130,0,0,0" MouseEnter="PlayPauseBtn_MouseOver" MouseLeave="PlayPauseBtn_MouseLeave" x:Name="NextBtn" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="45">
+                <my:CircleButtonRipple.RenderTransform>
+                        <ScaleTransform />
+                </my:CircleButtonRipple.RenderTransform>
+                <Path Data="M11,10L18,13.74  26,18 18,22.28 11,26 M28,10 L32,10 32,26 28,26" Fill="White" Height="25" HorizontalAlignment="Center" Stretch="Uniform" VerticalAlignment="Center" Width="25" />
+            </my:CircleButtonRipple>
+            <my:CircleButtonRipple  RenderTransformOrigin="0.5,0.5" BorderThickness="1" Height="45" HighlightBackground="DarkGray" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,130,0" MouseEnter="PlayPauseBtn_MouseOver" MouseLeave="PlayPauseBtn_MouseLeave" x:Name="PreviusBtn" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="45">
+                <my:CircleButtonRipple.RenderTransform>
+                        <ScaleTransform/>
+                </my:CircleButtonRipple.RenderTransform>
+                <Path Data="M7,18 L21,10 21,10 21, 26 7,18 M1,10 L5,10 5,26 1,26" Fill="White" Height="25" HorizontalAlignment="Center" Stretch="Uniform" VerticalAlignment="Center" Width="25" />
+            </my:CircleButtonRipple>
+            </Grid>
+        </Viewbox>
+    </Grid>
+</UserControl>

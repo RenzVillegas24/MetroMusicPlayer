@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Metro.MenuItems.About"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="379" xmlns:my="clr-namespace:AnimatedScrollViewer">
+    <Grid>
+        <my:AnimatedScrollViewer Margin="20,74,20,20" x:Name="animatedScrollViewer1" VerticalScrollBarVisibility="Auto" Background="#96F5F5F5">
+            <Grid Name="grid1" Height="1000">
+                <Label Content="Real Jam Music Player" Height="35" HorizontalAlignment="Left" Margin="8,12,0,0" VerticalAlignment="Top" Width="257" FontSize="17.5" HorizontalContentAlignment="Left" BorderBrush="#96696969" BorderThickness="1" />
+                <Label Content="Version 4.2.5" FontSize="12" Height="32" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="190,14,0,0" VerticalAlignment="Top" Width="75" VerticalContentAlignment="Bottom" Padding="0,7.5" Foreground="DimGray" />
+                <Label Content="2016 - 2017" FontSize="12" Height="21" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="8,47,0,0" VerticalAlignment="Top" Width="257" Background="#96696969" Foreground="White" Padding="0" />
+                <Label Content="Bass.dll &amp; bass_aac.dll - http://www.un4seen.com/" FontSize="12" Foreground="Black" Height="18" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="8,109,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Bottom" Width="267" />
+                <Label Content="Bass.net API - http://bass.radio42.com/" FontSize="12" Foreground="Black" Height="18" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="8,123,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Bottom" Width="267" />
+                <Label Content="APIs" FontSize="14" Foreground="Black" Height="21" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="8,89,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Bottom" Width="267" FontWeight="Normal" BorderBrush="#FFB7B7B7" BorderThickness="0,0,0,1" />
+            </Grid>
+        </my:AnimatedScrollViewer>
+        <Label Content="About" FontSize="25" Foreground="WhiteSmoke" Height="56" HorizontalAlignment="Left" Margin="20,12,0,0" Name="label1" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="127" />
+    </Grid>
+</UserControl>

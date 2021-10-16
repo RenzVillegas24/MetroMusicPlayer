@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Metro.MenuItems.Open"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="314" d:DesignWidth="475" xmlns:my="clr-namespace:Metro.Custom">
+    <Grid>
+        <my:ButtonRipple Content="Recent Files" Height="50" HorizontalAlignment="Left" Margin="20,85,0,0" x:Name="buttonRipple1" VerticalAlignment="Top" Width="130" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" Padding="15,0,0,0" Foreground="WhiteSmoke" HighlightBackground="DodgerBlue" Background="DodgerBlue" />
+        <Label Content="Open" Height="56" HorizontalAlignment="Left" Margin="20,12,0,0" Name="label1" VerticalAlignment="Top" Width="127" VerticalContentAlignment="Center" FontSize="25" Foreground="WhiteSmoke" />
+        <my:ButtonRipple Content="Browse" FontSize="15" Height="50" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="20,141,0,0" x:Name="buttonRipple2" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="130" Padding="15,0,0,0" Foreground="WhiteSmoke" HighlightBackground="DodgerBlue" Click="buttonRipple2_Click" />
+        <Border BorderBrush="DodgerBlue" BorderThickness="1,0,0,0" Margin="150,85,20,20" Name="border1">
+            <ListBox Name="listBox1" BorderThickness="0" Background="#64FFFFFF" Margin="1,0,0,0">
+                <ListBox.BorderBrush>
+                    <SolidColorBrush />
+                </ListBox.BorderBrush>
+            </ListBox>
+        </Border>
+    </Grid>
+</UserControl>

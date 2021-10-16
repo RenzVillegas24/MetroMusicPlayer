@@ -1,0 +1,333 @@
+﻿<Window x:Class="Metro.MiniPlayer" x:Name="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MiniPlayer" Height="380" Width="612" WindowStyle="None" ShowInTaskbar="False"
+        Topmost="True" AllowsTransparency="True" 
+        xmlns:my="clr-namespace:Metro.PlayerInterface" 
+        xmlns:my1="clr-namespace:Metro.Custom"
+        xmlns:my3="clr-namespace:BandedSpectrumAnalyzer" 
+        Background="Transparent" MouseUp="MainWindow_MouseUp"
+        ResizeMode="NoResize" Loaded="Window_Loaded" ContentRendered="MainWindow_ContentRendered"
+        IsVisibleChanged="MainWindow_IsVisibleChanged">
+    <Window.Resources>
+        <Storyboard x:Key="Drop">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.RenderTransform).(TranslateTransform.X)">
+                <SplineDoubleKeyFrame KeySpline="0.3,1.35,0.3,1" KeyTime="0:0:0.5" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.RenderTransform).(TranslateTransform.Y)">
+                <SplineDoubleKeyFrame KeySpline="0.3,1.35,0.3,1" KeyTime="0:0:0.5" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="Dropping">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                <SplineThicknessKeyFrame KeySpline="0.3,0.5,0,1" KeyTime="0:0:0.25" />
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="DropOut">
+            <ThicknessAnimationUsingKeyFrames BeginTime="0:0:0.5" Storyboard.TargetProperty="Margin">
+                <SplineThicknessKeyFrame KeySpline="0,0.2,0,1" KeyTime="0:0:0.5" />
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="DropFade">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="MainGridColor" Duration="0:0:0.2"/>
+        </Storyboard>
+    </Window.Resources>
+    <Grid  x:Name="MainGrid" MouseMove="Grid_MouseMove" >
+        <Grid.Background>
+            <LinearGradientBrush x:Name="MainGridColor" EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0">
+                <GradientStop Color="#00000000" Offset="0" />
+                <GradientStop Color="#39000000" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.Resources>
+            <Storyboard x:Key="Load">
+                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                    <SplineThicknessKeyFrame KeyTime="0" Value="0,0,-150,0" />
+                    <SplineThicknessKeyFrame KeyTime="0:0:0.5" Value="0,0,-150,0" />
+                    <SplineThicknessKeyFrame KeyTime="0:0:1.25"  KeySpline="0,0.3,0,1" Value="0"/>
+                </ThicknessAnimationUsingKeyFrames>
+
+            </Storyboard>
+            <Storyboard x:Key="Close">
+                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                    <SplineThicknessKeyFrame KeyTime="0" Value="0" />
+                    <SplineThicknessKeyFrame KeyTime="0:0:0.75"  KeySpline="0.2,0.5,0,1" Value="0,0,-150,0"/>
+                </ThicknessAnimationUsingKeyFrames>
+
+            </Storyboard>
+            <Storyboard x:Key="In">
+                <ThicknessAnimationUsingKeyFrames  Storyboard.TargetProperty="Margin" Storyboard.TargetName="gridSmall">
+                    <SplineThicknessKeyFrame KeyTime="0:0:0"  Value="0,92,0,0"/>
+                    <SplineThicknessKeyFrame KeyTime="0:0:0.4"  Value="0,92,0,0"/>
+                    <SplineThicknessKeyFrame KeyTime="0:0:0.95"  Value="20,0,0,0" KeySpline="0.2,0.5,0,1"/>
+                </ThicknessAnimationUsingKeyFrames>
+                <ThicknessAnimationUsingKeyFrames  Storyboard.TargetProperty="Margin" Storyboard.TargetName="progressTime">
+                    <SplineThicknessKeyFrame KeyTime="0:0:0.4"  Value="0"/>
+                    <SplineThicknessKeyFrame KeyTime="0:0:0.95"  Value="20,0,0,0" KeySpline="0.2,0.5,0,1"/>
+                </ThicknessAnimationUsingKeyFrames>
+                <Int32AnimationUsingKeyFrames  Storyboard.TargetProperty="Radius" Storyboard.TargetName="progressTime">
+                    <SplineInt32KeyFrame KeyTime="0:0:0.4"  Value="72"/>
+                    <SplineInt32KeyFrame KeyTime="0:0:0.95"  Value="15" KeySpline="0.2,0.5,0,1"/>
+                </Int32AnimationUsingKeyFrames>
+                <Int32AnimationUsingKeyFrames  Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="progressTime">
+                    <SplineInt32KeyFrame KeyTime="0:0:0.4"  Value="5"/>
+                    <SplineInt32KeyFrame KeyTime="0:0:0.95"  Value="3" KeySpline="0.2,0.5,0,1"/>
+                </Int32AnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Height" Storyboard.TargetName="GridCircleChild">
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.4"  Value="150"/>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.95"  Value="50" KeySpline="0.2,0.5,0,1"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Width" Storyboard.TargetName="GridCircleChild">
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.4"  Value="150"/>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.95"  Value="70" KeySpline="0.2,0.5,0,1"/>
+                </DoubleAnimationUsingKeyFrames>
+                
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="gridBig" 
+                                 Duration="0:0:0.2" From="1"  To="0" />
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="gridSmall" 
+                                 Duration="0:0:0.2" From="0"  To="1" />
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="show" 
+                                 BeginTime="0:0:0.95" Duration="0:0:0.2" From="0"  To="1" />
+                <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Visibility"  Storyboard.TargetName="gridSmall" >
+                    <DiscreteObjectKeyFrame KeyTime="0">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Duration="0:0:0.2" Storyboard.TargetProperty="Visibility"  Storyboard.TargetName="gridBig" >
+                    <DiscreteObjectKeyFrame KeyTime="0:0:0.2">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Hidden</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Duration="0:0:0.95" Storyboard.TargetProperty="Visibility"  Storyboard.TargetName="show" >
+                    <DiscreteObjectKeyFrame KeyTime="0:0:0.95">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                
+            </Storyboard>
+            <Storyboard x:Key="Out">
+                <ThicknessAnimationUsingKeyFrames  Storyboard.TargetProperty="Margin" Storyboard.TargetName="gridSmall">
+                    <SplineThicknessKeyFrame KeyTime="0:0:0"  Value="20,0,0,0"/>
+                    <SplineThicknessKeyFrame KeyTime="0:0:0.55"  Value="0,92,0,0" KeySpline="0,0.3,0,1"/>
+                </ThicknessAnimationUsingKeyFrames>
+                <ThicknessAnimationUsingKeyFrames  Storyboard.TargetProperty="Margin" Storyboard.TargetName="progressTime">
+                    <SplineThicknessKeyFrame KeyTime="0"  Value="20,0,0,0"/>
+                    <SplineThicknessKeyFrame KeyTime="0:0:0.55"  Value="0" KeySpline="0,0.3,0,1"/>
+                </ThicknessAnimationUsingKeyFrames>
+                <Int32AnimationUsingKeyFrames  Storyboard.TargetProperty="Radius" Storyboard.TargetName="progressTime">
+                    <SplineInt32KeyFrame KeyTime="0"  Value="15"/>
+                    <SplineInt32KeyFrame KeyTime="0:0:0.55"  Value="72" KeySpline="0,0.3,0,1"/>
+                </Int32AnimationUsingKeyFrames>
+                <Int32AnimationUsingKeyFrames  Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="progressTime">
+                    <SplineInt32KeyFrame KeyTime="0"  Value="3"/>
+                    <SplineInt32KeyFrame KeyTime="0:0:0.55"  Value="5" KeySpline="0,0.3,0,1"/>
+                </Int32AnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Height" Storyboard.TargetName="GridCircleChild">
+                    <SplineDoubleKeyFrame KeyTime="0"  Value="50"/>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.55"  Value="150" KeySpline="0,0.3,0,1"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Width" Storyboard.TargetName="GridCircleChild">
+                    <SplineDoubleKeyFrame KeyTime="0"  Value="70"/>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.55"  Value="150" KeySpline="0,0.3,0,1"/>
+                </DoubleAnimationUsingKeyFrames>
+
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="gridBig" 
+                                 BeginTime="0:0:0.55" Duration="0:0:0.2" From="0"  To="1" />
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="gridSmall" 
+                                 BeginTime="0:0:0.55" Duration="0:0:0.2" From="1"  To="0" />
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="show" 
+                                 Duration="0:0:0.2" From="1"  To="0" />
+
+                <ObjectAnimationUsingKeyFrames Duration="0:0:0.75" Storyboard.TargetProperty="Visibility"  Storyboard.TargetName="gridSmall" >
+                    <DiscreteObjectKeyFrame KeyTime="0:0:0.75">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Duration="0:0:0.55" Storyboard.TargetProperty="Visibility"  Storyboard.TargetName="gridBig" >
+                    <DiscreteObjectKeyFrame KeyTime="0:0:0.55">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Duration="0:0:0.2" Storyboard.TargetProperty="Visibility"  Storyboard.TargetName="show" >
+                    <DiscreteObjectKeyFrame KeyTime="0:0:0.2">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+
+            </Storyboard>
+            <Storyboard x:Key="InContainer">
+                <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Height">
+                    <SplineDoubleKeyFrame KeyTime="0"  Value="50"/>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.55"  Value="150" KeySpline="0,0.3,0,1"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Width">
+                    <SplineDoubleKeyFrame KeyTime="0"  Value="70"/>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.55"  Value="150" KeySpline="0,0.3,0,1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="OutContainer">
+                <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Height">
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.4"  Value="150"/>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.95"  Value="50" KeySpline="0.2,0.5,0,1"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Width">
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.4"  Value="150"/>
+                    <SplineDoubleKeyFrame KeyTime="0:0:0.95"  Value="70" KeySpline="0.2,0.5,0,1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="MouseOverLeave">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleX">
+                    <SplineDoubleKeyFrame KeySpline="0,0,0.3,2" KeyTime="0:0:0.35" Value="1.2" />
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.ScaleY">
+                    <SplineDoubleKeyFrame KeySpline="0,0,0.3,2" KeyTime="0:0:0.35" Value="1.2" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </Grid.Resources>
+        <Border Height="150"  Width="150" CornerRadius="75,0,0,75" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Background="#8C212121" x:Name="BorderRadiusRight"  SizeChanged="BorderSizeChanged" Margin="150,0,-150,0" />
+        <Border Height="150" Width="150" CornerRadius="0,75,75,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Background="#8C212121" x:Name="BorderRadiusLeft"  SizeChanged="BorderSizeChanged" Margin="-150,0,150,0" />
+        <Grid MouseDown="Grid_MouseDown" HorizontalAlignment="Left" VerticalAlignment="Top" Name="GridCircle" Height="150" Width="150">
+            <Grid.Resources>
+                <Storyboard x:Key="Larger">
+                    <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Width">
+                        <SplineDoubleKeyFrame KeyTime="0:0:0.25"  Value="150" KeySpline="0.2,0.5,0,1"/>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="Smaller">
+                    <DoubleAnimationUsingKeyFrames  Storyboard.TargetProperty="Width">
+                        <SplineDoubleKeyFrame KeyTime="0:0:0.25"  Value="100" KeySpline="0.2,0.5,0,1"/>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </Grid.Resources>
+            <Grid x:Name="GridCircleChild" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                    <Grid  MouseDown="Window_MouseDoubleClick" Height="140" Width="140" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" x:Name="gridBig" Background="#46212121">
+            <Grid.OpacityMask>
+                <VisualBrush>
+                    <VisualBrush.Visual>
+                        <Ellipse Fill="Black" SnapsToDevicePixels="True" Width="75" Height="75" />
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Grid.OpacityMask>
+                    <Image HorizontalAlignment="Center" Name="albumArt" Stretch="Fill" VerticalAlignment="Center" Width="140" Height="140" />
+            <Border BorderThickness="1" HorizontalAlignment="Stretch" Margin="-2" Name="border2" VerticalAlignment="Bottom" Height="85">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#00000000" Offset="0" />
+                        <GradientStop Color="#45000000" Offset="0.148" />
+                        <GradientStop Color="#60000000" Offset="0.418" />
+                        <GradientStop Color="#7A000000" Offset="0.574" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <my:PlayBox Height="40" HorizontalAlignment="Center" x:Name="playBoxControl" VerticalAlignment="Bottom" Margin="0,0,0,3.5" Width="100">
+                <my:PlayBox.Background>
+                    <SolidColorBrush />
+                </my:PlayBox.Background>
+            </my:PlayBox>
+                    <my3:SpectrumAnalyzer AveragePeaks="True" BarCount="6" BarHeightScaling="Decibel" BarSpacing="2" IsFrequencyScaleLinear="True" MaximumFrequency="30000" MinimumFrequency="0" x:Name="spectrumMusicMin" PeakFallDelay="0" Margin="0,15,0,0" Opacity="0.8" Width="55" HorizontalAlignment="Center" Foreground="{x:Null}" VerticalAlignment="Top" Height="45">
+                        <my3:SpectrumAnalyzer.Style>
+
+                            <Style TargetType="{x:Type my3:SpectrumAnalyzer}">
+                                <Setter Property="BarCount"
+                Value="50" />
+                                <Setter Property="BarSpacing"
+                Value="5" />
+                                <Setter Property="BarStyle">
+                                    <Setter.Value>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill"
+                            Value="WhiteSmoke" />
+
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="PeakStyle">
+                                    <Setter.Value>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill"
+                            Value="Transparent" />
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type my3:SpectrumAnalyzer}">
+                                            <Canvas Name="PART_SpectrumCanvas"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            ClipToBounds="True" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                            <!-- EndRegion: SpectrumAnalyzer -->
+                        </my3:SpectrumAnalyzer.Style>
+                    </my3:SpectrumAnalyzer>
+                    <Label Height="15" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,45" Name="ArtistText" Padding="0" VerticalAlignment="Bottom" VerticalContentAlignment="Top" Foreground="WhiteSmoke" FontSize="10" />
+            <Grid x:Name="TitleGrid" Height="15" HorizontalAlignment="Stretch" Margin="0,0,0,60" VerticalAlignment="Bottom" Width="Auto" ClipToBounds="True">
+                <Grid.Resources>
+                    <Storyboard x:Key="Scrolling" RepeatBehavior="Forever">
+                        <DoubleAnimation Storyboard.TargetProperty="X" Storyboard.TargetName="titleTextX" SpeedRatio="0.25"  AccelerationRatio="0" DecelerationRatio="0"/>
+                    </Storyboard>
+                </Grid.Resources>
+                <TextBlock SizeChanged="TitleText_SizeChanged"  Height="15" Margin="0" 
+                       Name="TitleText" VerticalAlignment="Top" Padding="0" 
+                       HorizontalAlignment="Center" Foreground="White" TextAlignment="Center"
+                       Background="Transparent" MaxHeight="Infinity" MinHeight="0" MinWidth="0">
+                <TextBlock.RenderTransform>
+                    <TranslateTransform x:Name="titleTextX"/>
+                </TextBlock.RenderTransform>
+                </TextBlock>
+            </Grid>
+                <my1:ButtonRipple RenderTransformOrigin="0.5,0.5" Content="&gt;" Height="25" HorizontalAlignment="Left" Margin="0" x:Name="hide" VerticalAlignment="Center" Width="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Background="#B4808080" HighlightBackground="Gray" Click="hide_Click">
+                    <my1:ButtonRipple.OpacityMask>
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border Background="Black" SnapsToDevicePixels="True" Width="150" Height="150" CornerRadius="0,150,150,0" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </my1:ButtonRipple.OpacityMask>
+                </my1:ButtonRipple>
+            </Grid>
+
+               
+                <Grid Visibility="Collapsed" Height="40" Width="40" ClipToBounds="True" 
+                      x:Name="gridSmall" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <my:PlayBox x:Name="playBoxSmall"  Height="40" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="0" Width="100">
+                <my:PlayBox.Background>
+                <SolidColorBrush />
+                </my:PlayBox.Background>
+            </my:PlayBox>
+        </Grid>
+                <my1:ButtonRipple RenderTransformOrigin="0.5,0.5"  Visibility="Collapsed" Content="&lt;" Height="47.5" HorizontalAlignment="Left" Margin="-0.7,0" x:Name="show" VerticalAlignment="Center" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" HighlightBackground="Gray" Click="show_Click">
+                    <my1:ButtonRipple.OpacityMask>
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border Background="Black" SnapsToDevicePixels="True" Width="20" Height="50" CornerRadius="25,0,0,25" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </my1:ButtonRipple.OpacityMask>
+                </my1:ButtonRipple>
+                <my1:CircularProgressBar Height="160" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Margin="0" x:Name="progressTime" VerticalAlignment="Center" Width="160" Radius="72" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" StrokeThickness="5" SegmentColor="DodgerBlue" Percentage="0">
+                    <my1:CircularProgressBar.RenderTransform>
+                        <ScaleTransform />
+                    </my1:CircularProgressBar.RenderTransform>
+                </my1:CircularProgressBar>
+            </Grid>
+         </Grid>
+        <TextBox x:Name="isDragging" Visibility="Hidden" TextChanged="isDragging_TextChanged"/>
+        <TextBox x:Name="circleDirection" Visibility="Hidden" TextChanged="circleDirection_TextChanged"/>
+    </Grid>
+</Window>
